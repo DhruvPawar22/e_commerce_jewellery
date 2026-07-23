@@ -1,0 +1,31 @@
+:root {
+  /* Palette — extracted from the design handoff bundle (see CLAUDE.md) */
+  --color-bg: #f6efe4;
+  --color-surface: #fbf6ee;
+  --color-surface-alt: #eee1d2;
+  --color-text: #3a2a28;
+  --color-text-muted: #5a4a3f;
+  --color-text-subtle: #7a6a5c;
+  --color-rose: #8b5a5a;
+  --color-rose-hover: #b8935a;
+  --color-gold: #b8935a;
+  --color-sage: #7c8c6d;
+  --color-footer-bg: #3a2a28;
+  --color-footer-text: #f6efe4;
+  --color-footer-text-muted: #d9cbb9;
+  --color-footer-text-subtle: #c9b8a5;
+  --color-footer-border: #a8937f;
+
+  --font-heading: 'Fraunces', serif;
+  --font-body: 'Public Sans', sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+
+  --shadow-card: 0 2px 12px rgba(122, 70, 50, 0.08);
+
+  --page-max-width: 1200px;
+  --page-max-width-narrow: 1000px;
+  --page-padding-x: 64px;
+}

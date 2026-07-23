@@ -1,0 +1,21 @@
+.card {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.shadow {
+  box-shadow: var(--shadow-card);
+}
+
+.padding-none {
+  padding: 0;
+}
+.padding-md {
+  padding: 20px 22px;
+}
+.padding-lg {
+  padding: 32px;
+}
+.padding-xl {
+  padding: 48px;
+}

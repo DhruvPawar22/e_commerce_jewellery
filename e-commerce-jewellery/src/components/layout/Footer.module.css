@@ -1,0 +1,67 @@
+.footer {
+  background: var(--color-footer-bg);
+  color: var(--color-footer-text);
+  padding: 56px var(--page-padding-x) 32px;
+  margin-top: 60px;
+}
+
+.grid {
+  max-width: var(--page-max-width);
+  margin: 0 auto 40px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+}
+
+.brandName {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  color: var(--color-surface);
+  margin-bottom: 12px;
+}
+
+.tagline {
+  color: var(--color-footer-text-subtle);
+  font-size: 14px;
+  max-width: 280px;
+  margin: 0 0 16px;
+}
+
+.whatsapp {
+  color: var(--color-footer-text-muted);
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.columnHeading {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-gold);
+  margin: 0 0 16px;
+}
+
+.linkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.linkList a {
+  color: var(--color-footer-text-muted);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.bottomBar {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  color: var(--color-footer-border);
+  text-align: center;
+}
