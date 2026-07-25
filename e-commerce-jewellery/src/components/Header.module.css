@@ -1,0 +1,75 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 64px;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--color-rose);
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.navLink {
+  text-decoration: none;
+  color: var(--color-text);
+  font-size: 15px;
+  font-weight: 500;
+  padding-bottom: 6px;
+  display: inline-block;
+  position: relative;
+}
+
+/* active/current page link gets the dashed accent underline instead of a solid border */
+.navLinkActive::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-image: repeating-linear-gradient(
+    90deg,
+    var(--color-rose) 0,
+    var(--color-rose) 4px,
+    transparent 4px,
+    transparent 8px
+  );
+}
+
+.cartWrapper {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  color: var(--color-rose);
+}
+
+.cartBadge {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: var(--color-gold);
+  color: var(--color-surface);
+  font-size: 11px;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

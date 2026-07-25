@@ -1,0 +1,22 @@
+:root {
+  --font-heading: 'Fraunces', serif;
+  --font-body: 'Public Sans', sans-serif;
+
+  --color-bg: #F6EFE4;
+  --color-surface: #FBF6EE;
+  --color-text: #3A2A28;
+  --color-text-muted: #5a4a3f;
+  --color-text-muted-light: #7a6a5c;
+
+  --color-rose: #8B5A5A;
+  --color-rose-hover: #74494a;
+  --color-gold: #B8935A;
+  --color-tag-green: #7C8C6D;
+
+  --color-footer-bg: #3A2A28;
+  --color-footer-text: #F6EFE4;
+  --color-footer-heading: #FBF6EE;
+  --color-footer-muted: #c9b8a5;
+  --color-footer-link: #d9cbb9;
+  --color-footer-copyright: #a8937f;
+}
