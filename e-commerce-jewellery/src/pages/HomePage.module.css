@@ -1,0 +1,115 @@
+/* Eyebrow label — "Curated Collection", "New Arrivals", "Our Story" */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* Hero */
+.heroTitle {
+  font-family: var(--font-heading);
+  font-size: 52px;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin: 0 0 24px;
+}
+
+.heroText {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  max-width: 420px;
+  margin: 0 0 32px;
+}
+
+/* Featured Pieces */
+.featuredTitle {
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 8px 0 0;
+}
+
+.categoryTag {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-tag-green);
+}
+
+.productTitle {
+  font-family: var(--font-heading);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 8px;
+}
+
+.productPrice {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+/* Our Story */
+.storyTitle {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 18px;
+}
+
+.storyText {
+  font-family: var(--font-body);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+  max-width: 440px;
+  margin: 0 0 24px;
+}
+
+.storyLink {
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--color-rose);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--color-gold);
+  padding-bottom: 2px;
+}
+
+/* Value props */
+.valueIcon {
+  font-family: var(--font-body);
+  font-size: 28px;
+  color: var(--color-gold);
+  margin-bottom: 12px;
+}
+
+.valueTitle {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0 0 6px;
+}
+
+.valueText {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-muted-light);
+  margin: 0;
+}
