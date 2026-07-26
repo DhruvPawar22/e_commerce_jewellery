@@ -20,3 +20,9 @@
   --color-footer-link: #d9cbb9;
   --color-footer-copyright: #a8937f;
 }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 64px;
+}
