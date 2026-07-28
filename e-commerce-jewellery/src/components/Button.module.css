@@ -30,5 +30,5 @@
 }
 
 .secondary:hover {
-  background: var(--color-secondary-hover-bg);
+  background: var(--color-tint);
 }

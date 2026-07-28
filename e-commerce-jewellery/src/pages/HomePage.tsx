@@ -2,7 +2,7 @@ import { Button } from "../components/Button"
 import { ProductCard } from "../components/ProductCard"
 import styles from "../pages/HomePage.module.css"
 import { ImagePlaceholder } from "../placeholder/ImagePlaceHolder"
-
+//API handling left
 const featuredProducts = [
   { id: "product-tote", category: "Bags", title: "Woven Tote, Camel", price: "3,200" },
   { id: "product-cuff", category: "Jewellery", title: "Hammered Brass Cuff", price: "1,450" },
