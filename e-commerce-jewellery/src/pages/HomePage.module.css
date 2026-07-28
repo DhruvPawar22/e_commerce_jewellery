@@ -74,6 +74,14 @@
 }
 
 /* Value props */
+.valueGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-bottom: 100px;
+  text-align: center;
+}
+
 .valueIcon {
   font-family: var(--font-body);
   font-size: 28px;
