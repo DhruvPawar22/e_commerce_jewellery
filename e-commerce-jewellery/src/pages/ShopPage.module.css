@@ -149,6 +149,23 @@
   border: 1.5px solid var(--color-rose);
 }
 
+/* Infinite scroll loader */
+.loader {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 60px;
+  border-radius: 50%;
+  border: 3px solid var(--color-tint);
+  border-top-color: var(--color-rose);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Empty state */
 .emptyState {
   text-align: center;
