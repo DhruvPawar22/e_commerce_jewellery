@@ -1,16 +1,11 @@
 import styles from "../components/Header.module.css"
 import { NavLink } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
+import { useCart } from "../context/cartContext";
 
-type HeaderProps = {
-    count: number; 
-
-}
-
-
-
-export function Header({count = 0}:HeaderProps)
+export function Header()
 {
+    const { itemCount } = useCart()
     const navList = [
         { label: "Home", path: "/" },
         { label: "Shop", path: "/shop" },
@@ -20,7 +15,7 @@ export function Header({count = 0}:HeaderProps)
 
         return(
     <div className={styles.header}>
-        <div className={styles.logo}>Cure by Design</div>
+        <div className={styles.logo}>XYZ</div>
         <nav>
             <ul className={styles.navList}>
                 {navList.map((item) => (
@@ -37,7 +32,7 @@ export function Header({count = 0}:HeaderProps)
                 ))}
                         <div className={styles.cartWrapper}>
                         <ShoppingBag size={24} color="var(--color-rose)" strokeWidth={1.5} />
-                        <span className={styles.cartBadge}>{count}</span>
+                        <span className={styles.cartBadge}>{itemCount}</span>
                         </div>
             </ul>
         </nav>

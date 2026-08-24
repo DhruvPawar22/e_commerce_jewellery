@@ -79,4 +79,42 @@
   font-size: 16px;
   font-weight: 700;
   color: var(--color-gold);
+  margin-bottom: 14px;
+}
+
+.quantityStepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--color-rose);
+  border-radius: 14px;
+  padding: 6px 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.stepperButton {
+  background: transparent;
+  border: none;
+  color: var(--color-surface);
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.2s ease;
+}
+
+.stepperButton:hover {
+  background: rgba(251, 246, 238, 0.15);
+}
+
+.stepperQuantity {
+  color: var(--color-surface);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
 }

@@ -2,7 +2,16 @@ import { useMemo, useState , useRef} from "react"
 import styles from "../pages/ShopPage.module.css"
 import { ProductCard } from "../components/ProductCard"
 import { type Product, useInfiniteScroll } from "../hooks/useInfiniteScroll"
-const ShopProducts:Product[] = []
+const ShopProducts: Product[] = [
+  { id: "product-tote", category: "Bags", title: "Woven Tote, Camel", price: "3,200" },
+  { id: "product-cuff", category: "Jewellery", title: "Hammered Brass Cuff", price: "1,450" },
+  { id: "product-crossbody", category: "Bags", title: "Crossbody, Saddle Tan", price: "4,600" },
+  { id: "product-earrings", category: "Jewellery", title: "Garnet Drop Earrings", price: "2,100" },
+  { id: "product-satchel", category: "Bags", title: "Structured Satchel, Espresso", price: "5,400" },
+  { id: "product-hoops", category: "Jewellery", title: "Beaten Silver Hoops", price: "1,650" },
+  { id: "product-clutch", category: "Bags", title: "Woven Clutch, Ivory", price: "2,800" },
+  { id: "product-pendant", category: "Jewellery", title: "Rose Quartz Pendant", price: "1,900" },
+]
 export function ShopPage()
 {
         const [searchValue,setSearchValue] = useState("")
@@ -75,6 +84,7 @@ export function ShopPage()
                 {displayedItems.map((product)=>(
                     <ProductCard
                     key={product.id}
+                    id={product.id}
                     category={product.category}
                     title={product.title}
                     price={product.price}

@@ -3,14 +3,15 @@ import styles from "../components/Button.module.css"
 
 type ButtonProps = {
     variant:"primary" | "secondary",
-    children: ReactNode
+    children: ReactNode,
+    onClick?: () => void,
 }
 
-export function Button({variant, children}: ButtonProps) 
+export function Button({variant, children, onClick}: ButtonProps)
     {
     return(
         variant==="secondary"
-            ? <button className={`${styles.button} ${styles.secondary}`}>{children}</button>
-            : <button className={`${styles.button} ${styles.primary}`}>{children}</button>
+            ? <button className={`${styles.button} ${styles.secondary}`} onClick={onClick}>{children}</button>
+            : <button className={`${styles.button} ${styles.primary}`} onClick={onClick}>{children}</button>
     )
 }

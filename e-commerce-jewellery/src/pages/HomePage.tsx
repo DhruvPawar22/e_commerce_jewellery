@@ -46,6 +46,7 @@ export function HomePage() {
             featuredProducts.map((product)=>(
               <ProductCard
               key={product.id}
+              id={product.id}
               category={product.category}
               title={product.title}
               price={product.price}
