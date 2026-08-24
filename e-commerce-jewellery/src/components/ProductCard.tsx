@@ -17,7 +17,7 @@ export function ProductCard({id, category, title, price, button=false}:ProductCa
     const cartItem = items.find(i => i.id === id)
 
     const handleAddToCart = () => {
-        addItem({ id, category, title, price, imgId: id })
+        addItem({ id, category, title, imgId: id })
     }
 
     return (

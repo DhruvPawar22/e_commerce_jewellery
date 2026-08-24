@@ -5,7 +5,6 @@ type CartItem = {
     id: string,
     category: string,
     title: string,
-    price: string,
     quantity: number,
     imgId: string,
 }
