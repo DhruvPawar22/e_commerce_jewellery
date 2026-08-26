@@ -1,18 +1,17 @@
 import { useEffect, useMemo, useState } from "react"
-import {
-    Autocomplete,
-    Box,
-    Button,
-    Card,
-    CardContent,
-    Chip,
-    IconButton,
-    TextField,
-    Typography,
-} from "@mui/material"
+import { Autocomplete, Box, Button, TextField, Typography } from "@mui/material"
 import AddIcon from "@mui/icons-material/Add"
-import DeleteIcon from "@mui/icons-material/Delete"
+import {
+    DndContext,
+    closestCenter,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    type DragEndEvent,
+} from "@dnd-kit/core"
+import { SortableContext, verticalListSortingStrategy, arrayMove } from "@dnd-kit/sortable"
 import { api } from "../api/client"
+import { SortableFeaturedCard } from "../components/SortableFeaturedCard"
 import type { Product } from "../types/product"
 
 export function FeaturedCollectionPage() {
@@ -68,6 +67,22 @@ export function FeaturedCollectionPage() {
         loadData()
     }
 
+    const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 5 } }))
+
+    const handleDragEnd = async (event: DragEndEvent) => {
+        const { active, over } = event
+        if (!over || active.id === over.id) return
+
+        const oldIndex = featured.findIndex((p) => p.id === active.id)
+        const newIndex = featured.findIndex((p) => p.id === over.id)
+        const reordered = arrayMove(featured, oldIndex, newIndex)
+        setFeatured(reordered) // optimistic -- reflect the new order immediately
+
+        await Promise.all(
+            reordered.map((p, index) => api.patch(`/admin/featured/${p.id}`, { display_order: index }))
+        )
+    }
+
     return (
         <Box>
             <Typography variant="h4" sx={{ mb: 3 }}>
@@ -105,32 +120,23 @@ export function FeaturedCollectionPage() {
                 <Typography color="text.secondary">No featured products yet.</Typography>
             )}
 
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-                {featured.map((product) => (
-                    <Card key={product.id} variant="outlined">
-                        <CardContent
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                "&:last-child": { pb: 2 },
-                            }}
-                        >
-                            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-                                <Typography sx={{ fontWeight: 600 }}>{product.title}</Typography>
-                                <Chip label={product.category} size="small" />
-                                <Typography color="text.secondary">₹{product.price}</Typography>
-                            </Box>
-                            <IconButton
-                                onClick={() => handleRemove(product.id)}
-                                aria-label={`Remove ${product.title} from featured`}
-                            >
-                                <DeleteIcon fontSize="small" />
-                            </IconButton>
-                        </CardContent>
-                    </Card>
-                ))}
-            </Box>
+            <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+                <SortableContext
+                    items={featured.map((p) => p.id)}
+                    strategy={verticalListSortingStrategy}
+                >
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
+                        {featured.map((product, index) => (
+                            <SortableFeaturedCard
+                                key={product.id}
+                                product={product}
+                                isHero={index === 0}
+                                onRemove={() => handleRemove(product.id)}
+                            />
+                        ))}
+                    </Box>
+                </SortableContext>
+            </DndContext>
         </Box>
     )
 }

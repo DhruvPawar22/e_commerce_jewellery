@@ -35,3 +35,10 @@ async def remove_featured(db: AsyncSession, product_id: uuid.UUID) -> None:
     if featured is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product is not featured")
     await featured_repository.remove(db, featured)
+
+
+async def reorder_featured(db: AsyncSession, product_id: uuid.UUID, display_order: int) -> None:
+    featured = await featured_repository.get(db, product_id)
+    if featured is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Product is not featured")
+    await featured_repository.update_display_order(db, featured, display_order)

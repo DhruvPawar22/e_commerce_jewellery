@@ -16,6 +16,7 @@ import {
     TableCell,
     TableContainer,
     TableHead,
+    TablePagination,
     TableRow,
     TextField,
     Typography,
@@ -36,6 +37,9 @@ export function ProductManagementPage() {
     const [search, setSearch] = useState("")
     const [categoryFilter, setCategoryFilter] = useState("All")
     const [sort, setSort] = useState<SortOption>("newest")
+
+    const [page, setPage] = useState(0)
+    const [rowsPerPage, setRowsPerPage] = useState(25)
 
     const [formOpen, setFormOpen] = useState(false)
     const [editingProduct, setEditingProduct] = useState<Product | null>(null)
@@ -71,6 +75,16 @@ export function ProductManagementPage() {
 
         return result
     }, [products, search, categoryFilter, sort])
+
+    // reset back to the first page whenever the filtered/sorted list changes underneath it
+    useEffect(() => {
+        setPage(0)
+    }, [search, categoryFilter, sort])
+
+    const pagedProducts = useMemo(
+        () => visibleProducts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage),
+        [visibleProducts, page, rowsPerPage]
+    )
 
     const openCreateForm = () => {
         setEditingProduct(null)
@@ -162,7 +176,7 @@ export function ProductManagementPage() {
                                 </TableCell>
                             </TableRow>
                         )}
-                        {visibleProducts.map((product) => (
+                        {pagedProducts.map((product) => (
                             <TableRow key={product.id}>
                                 <TableCell>{product.title}</TableCell>
                                 <TableCell>{product.category}</TableCell>
@@ -186,6 +200,18 @@ export function ProductManagementPage() {
                         ))}
                     </TableBody>
                 </Table>
+                <TablePagination
+                    component="div"
+                    count={visibleProducts.length}
+                    page={page}
+                    onPageChange={(_, newPage) => setPage(newPage)}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={(e) => {
+                        setRowsPerPage(parseInt(e.target.value, 10))
+                        setPage(0)
+                    }}
+                    rowsPerPageOptions={[25, 50, 100]}
+                />
             </TableContainer>
 
             <ProductFormDialog

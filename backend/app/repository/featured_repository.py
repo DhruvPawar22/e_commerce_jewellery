@@ -2,6 +2,7 @@ import uuid
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.models import FeaturedProduct, Product
 
@@ -9,6 +10,7 @@ from app.models import FeaturedProduct, Product
 async def list_featured_products(db: AsyncSession) -> list[Product]:
     stmt = (
         select(Product)
+        .options(selectinload(Product.images))
         .join(FeaturedProduct, FeaturedProduct.product_id == Product.id)
         .where(Product.is_active.is_(True))
         .order_by(FeaturedProduct.display_order.asc())
@@ -32,3 +34,12 @@ async def add(db: AsyncSession, product_id: uuid.UUID, display_order: int) -> Fe
 async def remove(db: AsyncSession, featured: FeaturedProduct) -> None:
     await db.delete(featured)
     await db.commit()
+
+
+async def update_display_order(
+    db: AsyncSession, featured: FeaturedProduct, display_order: int
+) -> FeaturedProduct:
+    featured.display_order = display_order
+    await db.commit()
+    await db.refresh(featured)
+    return featured
