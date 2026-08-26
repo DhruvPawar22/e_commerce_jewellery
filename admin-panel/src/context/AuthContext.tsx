@@ -1,25 +1,31 @@
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react"
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
 type AuthContextValue = {
-    token: string | null
+    isAuthenticated: boolean
+    isLoading: boolean
     login: (username: string, password: string) => Promise<void>
-    logout: () => void
+    logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
 
-const TOKEN_STORAGE_KEY = "admin_token"
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [token, setToken] = useState<string | null>(() =>
-        localStorage.getItem(TOKEN_STORAGE_KEY)
-    )
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        fetch(`${API_BASE_URL}/admin/me`, { credentials: "include" })
+            .then((res) => setIsAuthenticated(res.ok))
+            .catch(() => setIsAuthenticated(false))
+            .finally(() => setIsLoading(false))
+    }, [])
 
     const login = async (username: string, password: string) => {
         const res = await fetch(`${API_BASE_URL}/admin/login`, {
             method: "POST",
+            credentials: "include",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password }),
         })
@@ -28,18 +34,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             throw new Error("Invalid username or password")
         }
 
-        const data = await res.json()
-        localStorage.setItem(TOKEN_STORAGE_KEY, data.access_token)
-        setToken(data.access_token)
+        setIsAuthenticated(true)
     }
 
-    const logout = () => {
-        localStorage.removeItem(TOKEN_STORAGE_KEY)
-        setToken(null)
+    const logout = async () => {
+        await fetch(`${API_BASE_URL}/admin/logout`, {
+            method: "POST",
+            credentials: "include",
+        })
+        setIsAuthenticated(false)
     }
 
     return (
-        <AuthContext.Provider value={{ token, login, logout }}>
+        <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout }}>
             {children}
         </AuthContext.Provider>
     )

@@ -3,8 +3,7 @@ from datetime import datetime, timedelta, timezone
 
 import bcrypt
 import jwt
-from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi import HTTPException, Request, status
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-secret-change-me")
 JWT_ALGORITHM = "HS256"
@@ -14,7 +13,9 @@ ADMIN_USERNAME = os.getenv("ADMIN_USERNAME", "admin")
 # bcrypt hash of the admin password -- never store the plaintext password itself
 ADMIN_PASSWORD_HASH = os.getenv("ADMIN_PASSWORD_HASH", "")
 
-bearer_scheme = HTTPBearer()
+COOKIE_NAME = "admin_token"
+# must be True in any real deployment (HTTPS) -- browsers drop Secure cookies over plain HTTP
+COOKIE_SECURE = os.getenv("COOKIE_SECURE", "false").lower() == "true"
 
 
 def hash_password(plain_password: str) -> str:
@@ -31,11 +32,13 @@ def create_access_token(subject: str) -> str:
     return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
 
 
-def require_admin(
-    credentials: HTTPAuthorizationCredentials = Depends(bearer_scheme),
-) -> str:
+def require_admin(request: Request) -> str:
+    token = request.cookies.get(COOKIE_NAME)
+    if token is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+
     try:
-        payload = jwt.decode(credentials.credentials, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
+        payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[JWT_ALGORITHM])
     except jwt.ExpiredSignatureError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Admin token has expired"

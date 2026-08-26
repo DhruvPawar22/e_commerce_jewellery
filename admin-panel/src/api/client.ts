@@ -1,5 +1,4 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
-const TOKEN_STORAGE_KEY = "admin_token"
 
 export class ApiError extends Error {
     status: number
@@ -10,19 +9,16 @@ export class ApiError extends Error {
 }
 
 async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
-    const token = localStorage.getItem(TOKEN_STORAGE_KEY)
-
     const res = await fetch(`${API_BASE_URL}${path}`, {
         ...options,
+        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
             ...options.headers,
         },
     })
 
     if (res.status === 401) {
-        localStorage.removeItem(TOKEN_STORAGE_KEY)
         window.location.href = "/login"
         throw new ApiError(401, "Session expired, please log in again")
     }

@@ -4,7 +4,7 @@ import { Box, Button, Paper, TextField, Typography, Alert } from "@mui/material"
 import { useAuth } from "../context/AuthContext"
 
 export function LoginPage() {
-    const { token, login } = useAuth()
+    const { isAuthenticated, isLoading, login } = useAuth()
     const navigate = useNavigate()
 
     const [username, setUsername] = useState("")
@@ -12,7 +12,7 @@ export function LoginPage() {
     const [error, setError] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
 
-    if (token) {
+    if (!isLoading && isAuthenticated) {
         return <Navigate to="/products" replace />
     }
 
