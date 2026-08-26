@@ -10,6 +10,7 @@ from app.http import featured, shop
 from app.http.admin import auth as admin_auth
 from app.http.admin import featured as admin_featured
 from app.http.admin import products as admin_products
+from app.http.admin import uploads as admin_uploads
 
 app = FastAPI(title="E-Commerce Backend API")
 
@@ -27,6 +28,7 @@ app.add_middleware(
 app.include_router(admin_auth.router)
 app.include_router(admin_products.router)
 app.include_router(admin_featured.router)
+app.include_router(admin_uploads.router)
 app.include_router(shop.router)
 app.include_router(featured.router)
 

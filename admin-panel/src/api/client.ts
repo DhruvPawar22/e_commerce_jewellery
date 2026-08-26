@@ -9,11 +9,15 @@ export class ApiError extends Error {
 }
 
 async function apiFetch<T>(path: string, options: RequestInit = {}): Promise<T> {
+    // FormData sets its own multipart boundary in the Content-Type header --
+    // if we set "application/json" here it would break the upload
+    const isFormData = options.body instanceof FormData
+
     const res = await fetch(`${API_BASE_URL}${path}`, {
         ...options,
         credentials: "include",
         headers: {
-            "Content-Type": "application/json",
+            ...(isFormData ? {} : { "Content-Type": "application/json" }),
             ...options.headers,
         },
     })
@@ -42,4 +46,12 @@ export const api = {
     patch: <T>(path: string, body: unknown) =>
         apiFetch<T>(path, { method: "PATCH", body: JSON.stringify(body) }),
     delete: <T>(path: string) => apiFetch<T>(path, { method: "DELETE" }),
+    uploadImage: (file: File) => {
+        const formData = new FormData()
+        formData.append("file", file)
+        return apiFetch<{ url: string }>("/admin/uploads/image", {
+            method: "POST",
+            body: formData,
+        })
+    },
 }
