@@ -2,6 +2,7 @@ import uuid
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.models import Product
 from app.schema.product import ProductCreate, ProductUpdate
@@ -12,17 +13,18 @@ async def create(db: AsyncSession, data: ProductCreate) -> Product:
     db.add(product)
     await db.commit()
     await db.refresh(product)
+    await db.refresh(product, attribute_names=["images"])
     return product
 
 
 async def get_by_id(db: AsyncSession, product_id: uuid.UUID) -> Product | None:
-    return await db.get(Product, product_id)
+    return await db.get(Product, product_id, options=[selectinload(Product.images)])
 
 
 async def list_all(
     db: AsyncSession, *, only_active: bool = False, category: str | None = None
 ) -> list[Product]:
-    stmt = select(Product)
+    stmt = select(Product).options(selectinload(Product.images))
     if only_active:
         stmt = stmt.where(Product.is_active.is_(True))
     if category:
@@ -38,6 +40,7 @@ async def update(db: AsyncSession, product: Product, data: ProductUpdate) -> Pro
         setattr(product, field, value)
     await db.commit()
     await db.refresh(product)
+    await db.refresh(product, attribute_names=["images"])
     return product
 
 

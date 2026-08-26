@@ -82,12 +82,14 @@ export function ProductManagementPage() {
         setFormOpen(true)
     }
 
-    const handleFormSubmit = async (data: ProductInput) => {
+    const handleFormSubmit = (data: ProductInput): Promise<Product> => {
         if (editingProduct) {
-            await api.patch<Product>(`/admin/products/${editingProduct.id}`, data)
-        } else {
-            await api.post<Product>("/admin/products", data)
+            return api.patch<Product>(`/admin/products/${editingProduct.id}`, data)
         }
+        return api.post<Product>("/admin/products", data)
+    }
+
+    const handleFormSaved = () => {
         setFormOpen(false)
         loadProducts()
     }
@@ -191,6 +193,7 @@ export function ProductManagementPage() {
                 product={editingProduct}
                 onClose={() => setFormOpen(false)}
                 onSubmit={handleFormSubmit}
+                onSaved={handleFormSaved}
             />
 
             <Dialog open={deleteTarget !== null} onClose={() => setDeleteTarget(null)}>
