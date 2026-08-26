@@ -7,6 +7,13 @@
       "runtimeArgs": ["--prefix", "e-commerce-jewellery", "run", "dev"],
       "port": 5173,
       "autoPort": true
+    },
+    {
+      "name": "admin-panel-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "admin-panel", "run", "dev"],
+      "port": 5174,
+      "autoPort": true
     }
   ]
 }
