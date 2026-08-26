@@ -3,11 +3,14 @@ import uuid
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.security import require_admin
 from app.database import get_db
 from app.schema.product import ProductCreate, ProductRead, ProductUpdate
 from app.service import product_service
 
-router = APIRouter(prefix="/products", tags=["products"])
+router = APIRouter(
+    prefix="/admin/products", tags=["admin-products"], dependencies=[Depends(require_admin)]
+)
 
 
 @router.post("", response_model=ProductRead, status_code=status.HTTP_201_CREATED)
