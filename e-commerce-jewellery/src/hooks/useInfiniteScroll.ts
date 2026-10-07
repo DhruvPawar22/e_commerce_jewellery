@@ -1,6 +1,11 @@
 import { useState,useRef, useEffect } from "react";
-
-export type Product = { id: string; category: string; title: string; price: string }
+export type ProductImage = {
+    id: string
+    url: string
+    display_order: number
+    created_at: string
+}
+export type Product = { id: string; category: string; title: string; price: string, images:ProductImage[]}
 export function useInfiniteScroll(products:Product[])
 {
     const ITEMS_PER_PAGE = 24;

@@ -1,26 +1,37 @@
-import { useMemo, useState , useRef} from "react"
+import { useEffect, useMemo, useState} from "react"
 import styles from "../pages/ShopPage.module.css"
 import { ProductCard } from "../components/ProductCard"
 import { type Product, useInfiniteScroll } from "../hooks/useInfiniteScroll"
-const ShopProducts: Product[] = [
-  { id: "product-tote", category: "Bags", title: "Woven Tote, Camel", price: "3,200" },
-  { id: "product-cuff", category: "Jewellery", title: "Hammered Brass Cuff", price: "1,450" },
-  { id: "product-crossbody", category: "Bags", title: "Crossbody, Saddle Tan", price: "4,600" },
-  { id: "product-earrings", category: "Jewellery", title: "Garnet Drop Earrings", price: "2,100" },
-  { id: "product-satchel", category: "Bags", title: "Structured Satchel, Espresso", price: "5,400" },
-  { id: "product-hoops", category: "Jewellery", title: "Beaten Silver Hoops", price: "1,650" },
-  { id: "product-clutch", category: "Bags", title: "Woven Clutch, Ivory", price: "2,800" },
-  { id: "product-pendant", category: "Jewellery", title: "Rose Quartz Pendant", price: "1,900" },
-]
+
 export function ShopPage()
 {
         const [searchValue,setSearchValue] = useState("")
+        const [ShopProducts,setShopProdcuts] = useState<Product[]>([])
+
+
         type Categories = "All" | "Bags" | "Jewellery";
 
         const categories: Categories[] = ["All", "Bags", "Jewellery"]
         const sortButton = ["Featured","Price: Low to High","Price: High to Low"]
         const [filter,setFilter] = useState<Categories>('All')
         const [sort,setSort] = useState('Featured')
+
+
+        useEffect(()=>{
+
+            const fetchProducts = async() =>{
+                    const response = await fetch('http://localhost:8000/shop/products')
+                    if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                    }
+                    const data = await response.json()
+                    setShopProdcuts(data)
+            }
+            fetchProducts()
+        },[])
+        
+
+
 
         const filteredProducts = useMemo(()=>{
             const result = ShopProducts
@@ -34,7 +45,7 @@ export function ShopPage()
             }
 
             return result
-        },[filter, searchValue, sort])
+        },[ShopProducts,filter, searchValue, sort])
         const { displayedItems, hasMore, loaderRef } = useInfiniteScroll(filteredProducts);
 
     return (
@@ -88,6 +99,7 @@ export function ShopPage()
                     category={product.category}
                     title={product.title}
                     price={product.price}
+                    image={product.images.find(image => image.display_order==0)?.url}
                     button={true}
                     />
                 ))}

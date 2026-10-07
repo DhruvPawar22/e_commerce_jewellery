@@ -8,10 +8,11 @@ type ProductCardProps ={
     category: string,
     title: string,
     price: string,
+    image?:string,
     button?:boolean
 }
 
-export function ProductCard({id, category, title, price, button=false}:ProductCardProps)
+export function ProductCard({id, category, title, price, image,button=false}:ProductCardProps)
 {
     const { items, addItem, changeQuantity } = useCart()
     const cartItem = items.find(i => i.id === id)
@@ -23,7 +24,8 @@ export function ProductCard({id, category, title, price, button=false}:ProductCa
     return (
     <div className={styles.card}>
         <div className={styles.imageWrapper}>
-            <ImagePlaceholder/>
+            <img src={image} alt="err" />
+
             <div className={styles.imageDivider}></div>
         </div>
         <div className={styles.content}>

@@ -31,8 +31,15 @@
 .imageWrapper {
   position: relative;
   height: 200px;
+  overflow: hidden;
 }
 
+.imageWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 /* dashed accent divider between image and card content, matching the recurring motif */
 .imageDivider {
   position: absolute;
