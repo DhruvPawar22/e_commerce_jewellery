@@ -20,7 +20,7 @@ export function ShopPage()
         useEffect(()=>{
 
             const fetchProducts = async() =>{
-                    const response = await fetch('http://localhost:8000/shop/products')
+                    const response = await fetch('http://localhost:8000/shop/products')//todo: replace w env before deployment
                     if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                     }

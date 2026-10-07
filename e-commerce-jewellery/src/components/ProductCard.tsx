@@ -1,5 +1,4 @@
 import styles from "../components/ProductCard.module.css"
-import { ImagePlaceholder } from "../placeholder/ImagePlaceHolder"
 import { Button } from "./Button"
 import { useCart } from "../context/cartContext"
 
